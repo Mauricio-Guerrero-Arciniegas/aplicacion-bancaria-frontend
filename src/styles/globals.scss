@@ -1,0 +1,115 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+.login-container,
+.dashboard-container {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+input {
+  display: block;
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  background-color: #0070f3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.error {
+  color: red;
+  margin-top: 0.5rem;
+}
+
+.transfer-container,
+.profile-container {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+input {
+  display: block;
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  background-color: #0070f3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.message {
+  color: green;
+  margin-top: 0.5rem;
+}
+
+.error {
+  color: red;
+  margin-top: 0.5rem;
+}
+
+body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 0; padding: 0; }
+.main-container { padding: 2rem; }
+
+.navbar {
+  display: flex; gap: 1rem; background: #0070f3; padding: 1rem; color: white;
+  a { color: white; text-decoration: none; }
+  button { margin-left: auto; background: #ff4d4f; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer; }
+}
+
+.login-container, .dashboard-container, .transfer-container, .profile-container {
+  max-width: 600px; margin: 50px auto; padding: 2rem; background: white; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+input { display: block; width: 100%; padding: 0.5rem; margin-bottom: 1rem; }
+button { padding: 0.5rem 1rem; background-color: #0070f3; color: white; border: none; border-radius: 5px; cursor: pointer; }
+.message { color: green; margin-top: 0.5rem; }
+.error { color: red; margin-top: 0.5rem; }
+
+.form-container {
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+input {
+  display: block;
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+}
+button {
+  padding: 0.5rem 1rem;
+  background-color: #0070f3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+p { margin-top: 0.5rem; color: green; }
