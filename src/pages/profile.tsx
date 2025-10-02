@@ -18,17 +18,28 @@ export default function Profile() {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    if (!token) { router.push('/login'); return; }
-    const fetchProfile = async () => {
-      try {
-        const res = await axiosClient.get<UserProfile>('/users/me');
-        setProfile(res.data);
-      } catch(err: unknown) {
-        if (axios.isAxiosError(err)) setMessage(err.response?.data?.message || 'Error al cargar perfil');
-      }
-    };
-    fetchProfile();
-  }, [token, router]);
+  if (!token) { 
+    router.push('/login'); 
+    return; 
+  }
+
+  const fetchProfile = async () => {
+    try {
+      // Asegúrate de enviar el token en el header Authorization
+      const res = await axiosClient.get<UserProfile>('/api/users/me', {
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
+});
+      setProfile(res.data);
+    } catch(err: unknown) {
+      if (axios.isAxiosError(err)) 
+        setMessage(err.response?.data?.message || 'Error al cargar perfil');
+    }
+  };
+
+  fetchProfile();
+}, [token, router]);
 
   return (
     <Layout>

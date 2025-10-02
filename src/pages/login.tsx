@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import axiosClient from '../api/axiosClient';
 import { useAuth } from '../context/AuthContext';
+import styles from '../styles/login.module.scss';
+import Layout from '@/components/Layout';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -14,7 +16,7 @@ export default function LoginPage() {
     e.preventDefault();
     try {
       const res = await axiosClient.post('/api/users/login', { email, password });
-      setToken(res.data.access_token); // token según tu backend
+      setToken(res.data.access_token); 
       router.push('/dashboard');
     } catch {
       setError('Credenciales inválidas');
@@ -22,33 +24,22 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="form-container">
-      <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
-        <input type="email" placeholder="Correo" value={email} onChange={e => setEmail(e.target.value)} required />
-        <input type="password" placeholder="Contraseña" value={password} onChange={e => setPassword(e.target.value)} required />
-        <button type="submit">Ingresar</button>
-      </form>
+    <Layout>  
+    <div className={styles['form-container']}>
+  <h1>Login</h1>
+  <form onSubmit={handleSubmit} className={styles.form}>
+    <input type="email" placeholder="Correo" value={email} onChange={e => setEmail(e.target.value)} required />
+    <input type="password" placeholder="Contraseña" value={password} onChange={e => setPassword(e.target.value)} required />
+    <button type="submit">Ingresar</button>
+  </form>
 
-      {error && <p>{error}</p>}
+  {error && <p className={styles.error}>{error}</p>}
 
-      {/* Botón para registrar un nuevo usuario */}
-      <p style={{ marginTop: '1rem' }}>
-        Registrar otro Usuario{' '}
-        <button 
-          onClick={() => router.push('/register')} 
-          style={{
-            background: 'none',
-            border: 'none',
-            color: '#0070f3',
-            cursor: 'pointer',
-            textDecoration: 'underline',
-            padding: 0,
-          }}
-        >
-          Registrar
-        </button>
-      </p>
-    </div>
+  <p>
+    Registrar otro Usuario{' '}
+    <button onClick={() => router.push('/register')}>Registrar</button>
+  </p>
+</div>
+</Layout>
   );
 }

@@ -3,6 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import Layout from '../components/Layout';
+import styles from '../styles/dashboard.module.scss';
 
 interface Transaction {
   id: string;
@@ -72,7 +73,7 @@ export default function Dashboard() {
 
   return (
     <Layout>
-      <div className="container">
+      <div className={styles.container}>
         <h1>Dashboard</h1>
         <button onClick={() => { logout(); router.push('/login'); }}>Cerrar sesión</button>
         <button onClick={() => router.push('/transfer')} style={{ marginLeft: '10px' }}>
