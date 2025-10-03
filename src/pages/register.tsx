@@ -35,7 +35,7 @@ export default function Register() {
   return (
     <div className={styles.screen}>
       <div className={styles.panel}>
-        <h1>🟢 Registro de Usuario</h1>
+        <h1>Registro de Usuario</h1>
         <form onSubmit={handleRegister} className={styles.form}>
           <input placeholder="Nombre" value={name} onChange={e => setName(e.target.value)} required />
           <input type="email" placeholder="Correo" value={email} onChange={e => setEmail(e.target.value)} required />

@@ -7,7 +7,7 @@ import styles from '../styles/dashboard.module.scss';
 
 interface Transaction {
   id: string;
-  amount: number; // ahora será número
+  amount: number; 
   date: string;
   type: string;
   description?: string;
@@ -20,7 +20,6 @@ export default function Dashboard() {
   const [balance, setBalance] = useState<number>(0);
   const [userName, setUserName] = useState('');
 
-  // Traer perfil y balance
   useEffect(() => {
     if (!token) {
       router.push('/login');
@@ -46,7 +45,6 @@ export default function Dashboard() {
     fetchProfile();
   }, [token, router]);
 
-  // Traer transacciones
   useEffect(() => {
     if (!token) return;
 
@@ -56,7 +54,6 @@ export default function Dashboard() {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        // Convertimos amount a número
         const transactionsNumeric = res.data.map(t => ({
           ...t,
           amount: Number(t.amount)
@@ -73,29 +70,31 @@ export default function Dashboard() {
 
   return (
     <Layout>
-      <div className={styles.container}>
-        <h1>Dashboard</h1>
-        <button onClick={() => { logout(); router.push('/login'); }}>Cerrar sesión</button>
-        <button onClick={() => router.push('/transfer')} style={{ marginLeft: '10px' }}>
-          Hacer transferencia
-        </button>
-        <p>
-          Balance de <strong>{userName}</strong>: ${balance.toFixed(2)}
-        </p>
-        <h2>Últimas transacciones</h2>
-        {transactions.length === 0 ? (
-          <p>No hay transacciones</p>
-        ) : (
-          <ul>
-            {transactions.map(t => (
-              <li key={t.id}>
-                {t.date} - {t.type} - ${t.amount.toFixed(2)}
-                {t.description && ` - ${t.description}`}
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
+      <div className={styles.dashboardWrapper}>
+  <div className={styles.container}>
+    <h1>Dashboard</h1>
+    <div className={styles.buttonGroup}>
+      <button onClick={() => { logout(); router.push('/login'); }}>Cerrar sesión</button>
+      <button onClick={() => router.push('/transfer')}>Hacer transferencia</button>
+    </div>
+    <p>
+      Balance de <strong>{userName}</strong>: ${balance.toFixed(2)}
+    </p>
+    <h2>Últimas transacciones</h2>
+    {transactions.length === 0 ? (
+      <p>No hay transacciones</p>
+    ) : (
+      <ul>
+        {transactions.map(t => (
+          <li key={t.id}>
+            {t.date} - {t.type} - ${t.amount.toFixed(2)}
+            {t.description && ` - ${t.description}`}
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
+</div>
     </Layout>
   );
 }

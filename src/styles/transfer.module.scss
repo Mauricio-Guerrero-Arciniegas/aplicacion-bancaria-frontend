@@ -1,105 +1,151 @@
-/* transfer.module.scss */
+$text-color: #ffffff; 
+$panel-bg: rgba(255, 255, 255, 0.1); 
+$input-bg: rgba(255, 255, 255, 0.15); 
+$button-color: #ff8c42; 
+$shadow-color: rgba(0,0,0,0.25);
+$background-image: url('/background.jpg'); 
 
 .transferContainer {
-  max-width: 500px;
-  margin: 40px auto;
-  padding: 30px;
-  background-color: #f9f9f9;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+  background: #{$background-image} no-repeat center center;
+  background-size: cover;
+  font-family: 'Inter', sans-serif;
+  color: $text-color;
+}
 
-  h1 {
-    text-align: center;
-    margin-bottom: 25px;
-    color: #333;
-  }
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-align: center;
+}
 
-  p {
-    font-size: 16px;
-    margin-bottom: 20px;
-    color: #555;
-    text-align: center;
-
-    strong {
-      color: #111;
-    }
-  }
+.balance {
+  margin-bottom: 2rem;
+  font-size: 1rem;
+  text-align: center;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 400px;
+  backdrop-filter: blur(12px);
+  background: $panel-bg;
+  border-radius: 1.5rem;
+  padding: 2rem 2rem;
+  box-shadow: 0 10px 30px $shadow-color;
+  border: 1px solid rgba(255,255,255,0.15);
+  text-align: center;
 
   select,
-  input {
-    padding: 10px 12px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    transition: border-color 0.2s;
+  .inputField {
+    width: 100%;
+    max-width: 300px;
+    padding: 0.85rem 1.2rem;
+    border-radius: 0.75rem;
+    border: none;
+    background: $input-bg;
+    color: $text-color;
+    font-size: 1rem;
+    backdrop-filter: blur(6px);
+    box-shadow: inset 0 2px 6px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+
+    &:focus {
+      outline: none;
+      border: 1px solid $button-color;
+      box-shadow: 0 0 12px $button-color, inset 0 2px 6px rgba(0,0,0,0.3);
+    }
+
+    &::placeholder {
+      color: rgba(255,255,255,0.6);
+    }
   }
 
-  select:focus,
-  input:focus {
-    outline: none;
-    border-color: #4a90e2;
+  select {
+    appearance: none;
+    cursor: pointer;
+    background-image: linear-gradient(45deg, transparent 50%, $text-color 50%), 
+                      linear-gradient(135deg, $text-color 50%, transparent 50%);
+    background-position: calc(100% - 20px) calc(1em + 2px), calc(100% - 15px) calc(1em + 2px);
+    background-size: 5px 5px, 5px 5px;
+    background-repeat: no-repeat;
+    padding-right: 2rem;
   }
 
   .submitButton {
-    padding: 12px;
-    font-size: 16px;
-    background-color: #4a90e2;
-    color: white;
+    width: 100%;
+    max-width: 300px;
+    padding: 1rem;
+    border-radius: 0.75rem;
     border: none;
-    border-radius: 8px;
+    background: $button-color;
+    color: $text-color;
+    font-weight: 600;
+    font-size: 1.1rem;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 
-    &:hover:not(:disabled) {
-      background-color: #357ab8;
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      filter: brightness(1.1);
     }
 
-    &:disabled {
-      background-color: #a0c4f1;
-      cursor: not-allowed;
+    &:active {
+      transform: translateY(1px);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     }
+  }
+}
+
+.backButton {
+  margin-top: 15px;
+  width: 100%;
+  max-width: 300px;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  border: none;
+  background: rgba(255,255,255,0.1);
+  color: $text-color;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  transition: all 0.25s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    filter: brightness(1.1);
+  }
+
+  &:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
   }
 }
 
 .message {
-  margin-top: 15px;
-  padding: 10px;
-  border-radius: 8px;
+  margin-top: 1rem;
+  font-size: 0.95rem;
   text-align: center;
-  font-weight: 500;
-
-  &.success {
-    background-color: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
-  }
-
-  &.error {
-    background-color: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
-  }
+  font-weight: bold;
 }
 
-.dashboardButton {
-  margin-top: 20px;
-  padding: 10px 15px;
-  font-size: 16px;
-  background-color: #6c757d;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.2s;
+.success {
+  color: #a2ff7d;
+}
 
-  &:hover {
-    background-color: #5a6268;
-  }
+.error {
+  color: #ff4444;
 }

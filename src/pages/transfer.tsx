@@ -16,7 +16,7 @@ export default function Transfer() {
   const router = useRouter();
 
   const [toUserId, setToUserId] = useState('');
-  const [amount, setAmount] = useState(''); // <-- string vacío para que no aparezca 0
+  const [amount, setAmount] = useState('');
   const [description, setDescription] = useState('');
   const [users, setUsers] = useState<User[]>([]);
   const [balance, setBalance] = useState<number>(0);
@@ -25,13 +25,11 @@ export default function Transfer() {
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // Traer perfil y balance
   useEffect(() => {
     if (!token) {
       router.replace('/login');
       return;
     }
-
     const fetchProfile = async () => {
       try {
         const res = await axios.get<{
@@ -42,7 +40,6 @@ export default function Transfer() {
         }>('http://localhost:3000/api/users/me', {
           headers: { Authorization: `Bearer ${token}` },
         });
-
         setBalance(Number(res.data.balance));
         setUserId(res.data.id);
         setUserName(res.data.name);
@@ -50,14 +47,11 @@ export default function Transfer() {
         console.error(err);
       }
     };
-
     fetchProfile();
   }, [token, router]);
 
-  // Traer usuarios para dropdown (excluye al propio usuario)
   useEffect(() => {
     if (!userId) return;
-
     const fetchUsers = async () => {
       try {
         const res = await axios.get<User[]>('http://localhost:3000/api/users', {
@@ -68,27 +62,15 @@ export default function Transfer() {
         console.error(err);
       }
     };
-
     fetchUsers();
   }, [token, userId]);
 
   const handleTransfer = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     const numericAmount = Number(amount);
-
-    if (!toUserId) {
-      setMessage('Por favor selecciona un destinatario.');
-      return;
-    }
-    if (!numericAmount || numericAmount <= 0) {
-      setMessage('Por favor ingresa un monto mayor a 0.');
-      return;
-    }
-    if (numericAmount > balance) {
-      setMessage('No tienes suficiente balance para realizar esta transferencia.');
-      return;
-    }
+    if (!toUserId) return setMessage('Por favor selecciona un destinatario.');
+    if (!numericAmount || numericAmount <= 0) return setMessage('Por favor ingresa un monto mayor a 0.');
+    if (numericAmount > balance) return setMessage('No tienes suficiente balance.');
 
     try {
       setLoading(true);
@@ -99,15 +81,12 @@ export default function Transfer() {
       );
       setMessage('Transferencia realizada con éxito');
       setToUserId('');
-      setAmount(''); // <-- limpiamos input sin mostrar cero
+      setAmount('');
       setDescription('');
       setBalance(prev => prev - numericAmount);
     } catch (err: unknown) {
-      if (axios.isAxiosError(err)) {
-        setMessage(err.response?.data?.message || 'Error al realizar la transferencia');
-      } else {
-        setMessage('Error desconocido');
-      }
+      if (axios.isAxiosError(err)) setMessage(err.response?.data?.message || 'Error al realizar la transferencia');
+      else setMessage('Error desconocido');
     } finally {
       setLoading(false);
     }
@@ -116,16 +95,13 @@ export default function Transfer() {
   return (
     <Layout>
       <div className={styles.transferContainer}>
-        <h1>Transferencias</h1>
-        <p>
+        <h1 className={styles.title}>Transferencias</h1>
+        <p className={styles.balance}>
           Balance de <strong>{userName}</strong>: ${balance.toFixed(2)}
         </p>
-        <form onSubmit={handleTransfer} className={styles.form}>
-          <select
-            value={toUserId}
-            onChange={e => setToUserId(e.target.value)}
-            required
-          >
+
+        <form className={styles.form} onSubmit={handleTransfer}>
+          <select className={styles.select} value={toUserId} onChange={e => setToUserId(e.target.value)} required>
             <option value="">Selecciona un destinatario</option>
             {users.map(user => (
               <option key={user.id} value={user.id}>
@@ -133,7 +109,9 @@ export default function Transfer() {
               </option>
             ))}
           </select>
+
           <input
+            className={styles.inputField}
             type="number"
             placeholder="Monto"
             value={amount}
@@ -142,31 +120,26 @@ export default function Transfer() {
             step="0.01"
             required
           />
+
           <input
+            className={styles.inputField}
             type="text"
             placeholder="Descripción (opcional)"
             value={description}
             onChange={e => setDescription(e.target.value)}
           />
-          <button type="submit" disabled={loading}>
+
+          <button className={styles.submitButton} type="submit" disabled={loading}>
             {loading ? 'Enviando...' : 'Enviar'}
           </button>
         </form>
 
-        {/* Botón para volver al dashboard */}
-        <button
-          style={{ marginTop: '15px' }}
-          onClick={() => router.push('/dashboard')}
-        >
+        <button className={styles.backButton} onClick={() => router.push('/dashboard')}>
           Volver al Dashboard
         </button>
 
         {message && (
-          <p
-            className={`${styles.message} ${
-              message.includes('éxito') ? styles.success : styles.error
-            }`}
-          >
+          <p className={`${styles.message} ${message.includes('éxito') ? styles.success : styles.error}`}>
             {message}
           </p>
         )}

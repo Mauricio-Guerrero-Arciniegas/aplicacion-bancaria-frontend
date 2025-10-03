@@ -9,7 +9,7 @@
     "dev-backend": "cd ../aplicacion-bancaria && npm run start:dev",
     "dev-frontend": "next dev -p 3001",
     "dev:all": "concurrently \"npm run dev-backend\" \"npm run dev-frontend\"",
-    "start-backend": "cd ../aplicacion-bancaria && npm run start:dev",
+    "start-backend": "cd ../aplicacion-bancaria-backend && npm run start:dev",
     "start-frontend": "next dev -p 3001",
     "start:all": "concurrently \"npm run start-backend\" \"npm run start-frontend\""
   },
